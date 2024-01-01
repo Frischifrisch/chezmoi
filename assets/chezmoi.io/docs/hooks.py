@@ -30,8 +30,8 @@ def on_pre_build(config: MkDocsConfig, **kwargs) -> None:
     docs_dir = PurePosixPath(config.docs_dir)
     for src_path in templates:
         output_path = docs_dir.joinpath(src_path)
-        template_path = output_path.parent / (output_path.name + '.tmpl')
-        data_path = output_path.parent / (output_path.name + '.yaml')
+        template_path = output_path.parent / f'{output_path.name}.tmpl'
+        data_path = output_path.parent / f'{output_path.name}.yaml'
         args = ['go', 'run', Path(config_dir, '../../internal/cmds/execute-template')]
         if Path(data_path).exists():
             args.extend(['-data', data_path])
@@ -46,8 +46,8 @@ def on_files(files: Files, config: MkDocsConfig, **kwargs) -> Files:
 
     # remove templates and data
     for src_path in templates:
-        files.remove(files.get_file_from_path(src_path + '.tmpl'))
-        data_path = src_path + '.yaml'
+        files.remove(files.get_file_from_path(f'{src_path}.tmpl'))
+        data_path = f'{src_path}.yaml'
         if data_path in files:
             files.remove(files.get_file_from_path(data_path))
 
